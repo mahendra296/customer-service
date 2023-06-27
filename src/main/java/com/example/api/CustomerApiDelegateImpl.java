@@ -3,6 +3,7 @@ package com.example.api;
 import com.example.dto.CustomerOrder;
 import com.example.dto.LoginRequest;
 import com.example.dto.LoginResponse;
+import com.example.dto.OrderPageResponse;
 import com.example.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,11 +28,11 @@ public class CustomerApiDelegateImpl implements CustomersApiDelegate {
     }
 
     @Override
-    public ResponseEntity<List<CustomerOrder>> getCustomerOrders(Long customerId) {
+    public ResponseEntity<OrderPageResponse> getCustomerOrders(Long customerId, Integer pageNumber, Integer pageSize) {
         log.info("Invoke getCustomerOrders API.");
-        List<CustomerOrder> customerOrderList = customerService.getCustomerOrders(customerId);
+        OrderPageResponse orderPageResponse = customerService.getCustomerOrders(customerId, pageNumber, pageSize);
         log.info("End getCustomerOrders API.");
-        return ResponseEntity.ok().body(customerOrderList);
+        return ResponseEntity.ok().body(orderPageResponse);
     }
 
     @Override

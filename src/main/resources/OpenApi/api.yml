@@ -26,13 +26,25 @@ paths:
           schema:
             type: long
           example: 1
+        - name: pageNumber
+          required: false
+          in: query
+          schema:
+            type: integer
+          example: 1
+        - name: pageSize
+          required: false
+          in: query
+          schema:
+            type: integer
+          example: 10
       responses:
         200:
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrderResponse'
+                $ref: '#/components/schemas/OrderPageResponse'
         500:
           description: Internal server error
           content:
@@ -334,10 +346,15 @@ paths:
                 type: string
 components:
   schemas:
-    OrderResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/CustomerOrder'
+    OrderPageResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerOrder'
+        paging:
+          $ref: '#/components/schemas/PagingInformation'
     CustomerOrder:
       type: object
       properties:
