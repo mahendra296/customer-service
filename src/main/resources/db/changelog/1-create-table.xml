@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <changeSet id="1" author="Mahendra">
+
+        <createTable tableName="customer">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(50)"/>
+            <column name="phone" type="varchar(15)"/>
+            <column name="email" type="varchar(50)"/>
+            <column name="password" type="varchar(100)"/>
+            <column name="created_at" type="Timestamp" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="Timestamp"
+                    defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
+        </createTable>
+
+        <createTable tableName="roles">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="role_name" type="varchar(50)"/>
+            <column name="description" type="varchar(15)"/>
+            <column name="created_at" type="Timestamp" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="Timestamp"
+                    defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
+        </createTable>
+
+        <createTable tableName="customer_roles">
+            <column name="customer_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_customer_roles_customer_id"
+                             referencedTableName="customer"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="role_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_customer_roles_role_id"
+                             referencedTableName="roles"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="merchant">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(50)"/>
+            <column name="phone" type="varchar(15)"/>
+            <column name="email" type="varchar(50)"/>
+            <column name="password" type="varchar(100)"/>
+            <column name="created_at" type="Timestamp" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="Timestamp"
+                    defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
+        </createTable>
+
+        <createTable tableName="shop">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(50)"/>
+            <column name="merchant_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_shop_merchant_id"
+                             referencedTableName="merchant"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="status" type="varchar(10)"/>
+            <column name="latitude" type="double"/>
+            <column name="longitude" type="double"/>
+            <column name="created_at" type="Timestamp" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="Timestamp"
+                    defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
+        </createTable>
+
+        <createTable tableName="menu">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(50)"/>
+            <column name="shop_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_menu_shop_id"
+                             referencedTableName="shop"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="status" type="varchar(10)"/>
+            <column name="start_time" type="varchar(10)"/>
+            <column name="end_time" type="varchar(10)"/>
+            <column name="created_at" type="Timestamp" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="Timestamp"
+                    defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
+        </createTable>
+
+        <createTable tableName="category">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(50)"/>
+            <column name="created_at" type="Timestamp" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="Timestamp"
+                    defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
+        </createTable>
+
+        <createTable tableName="menu_item">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="item_name" type="varchar(50)"/>
+            <column name="menu_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_menu_item_menu_id"
+                             referencedTableName="menu"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="category_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_menu_item_category_id"
+                             referencedTableName="category"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="price" type="double"/>
+            <column name="current_quantity" type="int"/>
+            <column name="created_at" type="Timestamp" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="Timestamp"
+                    defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
+        </createTable>
+
+        <createTable tableName="orders">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="shop_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_orders_shop_id"
+                             referencedTableName="shop"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="menu_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_orders_menu_id"
+                             referencedTableName="menu"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="customer_id" type="bigint"/>
+            <column name="status" type="varchar(15)"/>
+            <column name="total" type="double"/>
+            <column name="created_at" type="Timestamp" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="Timestamp"
+                    defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
+        </createTable>
+
+        <createTable tableName="order_item">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="menu_item_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_order_item_menu_item_id"
+                             referencedTableName="menu_item"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="order_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_order_item_order_id"
+                             referencedTableName="orders"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="price" type="double"/>
+            <column name="quantity" type="int"/>
+            <column name="created_at" type="Timestamp" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="Timestamp"
+                    defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

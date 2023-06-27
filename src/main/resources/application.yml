@@ -1,0 +1,22 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/customerdb
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platfrom: org.hibernate.dialect.PostgreSQL9Dialect
+    show-sql: true
+  liquibase:
+    change-log: classpath:/db/changelog-master.xml
+  main:
+    allow-bean-definition-overriding: true
+  show-sql: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+jwt:
+  secret: demoexample

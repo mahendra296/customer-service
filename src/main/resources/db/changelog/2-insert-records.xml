@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <changeSet id="2" author="Mahendra">
+        <insert tableName="customer">
+            <column name="name" value="Mahi"/>
+            <column name="phone" value="9191919191"/>
+            <column name="email" value="mahi@gmail.com"/>
+            <column name="password" value="$2a$10$gymgB46pTvb8ibSJ6pIH4u0xzPcsVqCoq/3atw2KclAvAr.dlb5Bi"/>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+        <insert tableName="roles">
+            <column name="role_name" value="ROLE_CUSTOMER"/>
+            <column name="description" value="Customer role"/>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+        <insert tableName="roles">
+            <column name="role_name" value="ROLE_MERCHANT"/>
+            <column name="description" value="Merchant role"/>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+        <insert tableName="customer_roles">
+            <column name="customer_id" value="1"/>
+            <column name="role_id" value="1"/>
+        </insert>
+        <insert tableName="merchant">
+            <column name="name" value="Mahendra"/>
+            <column name="phone" value="9191919191"/>
+            <column name="email" value="mahendra@gmail.com"/>
+            <column name="password" value="mahendra"/>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+        <insert tableName="shop">
+            <column name="name" value="Zen Cafe"/>
+            <column name="status" value="OPEN"/>
+            <column name="latitude" value="30.2686309"/>
+            <column name="longitude" value="-97.7431606"/>
+            <column name="merchant_id" value="1"/>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+        <insert tableName="category">
+            <column name="name" value="coffee"/>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+        <insert tableName="category">
+            <column name="name" value="soft drinks"/>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+        <insert tableName="menu">
+            <column name="name" value="drinks"/>
+            <column name="shop_id" value="1"/>
+            <column name="status" type="ACTIVE"/>
+            <column name="start_time" type="10:00 AM"/>
+            <column name="end_time" type="11:00 AM"/>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+
+        <insert tableName="menu_item">
+            <column name="menu_id" value="1"/>
+            <column name="item_name" value="Espresso"/>
+            <column name="category_id" value="1"/>
+            <column name="price" value="80.00"/>
+            <column name="current_quantity" value="5"/>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+
+        <insert tableName="menu_item">
+            <column name="menu_id" value="1"/>
+            <column name="item_name" value="Cappuccino"/>
+            <column name="category_id" value="1"/>
+            <column name="price" value="100.00"/>
+            <column name="current_quantity" value="5"/>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+
+        <insert tableName="menu_item">
+            <column name="menu_id" value="1"/>
+            <column name="item_name" value="latte"/>
+            <column name="category_id" value="1"/>
+            <column name="price" value="150.00"/>
+            <column name="current_quantity" value="5"/>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+
+        <insert tableName="menu_item">
+            <column name="menu_id" value="1"/>
+            <column name="item_name" value="Coca-Cola"/>
+            <column name="category_id" value="2"/>
+            <column name="price" value="70.00"/>
+            <column name="current_quantity" value="5"/>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+
+        <insert tableName="menu_item">
+            <column name="menu_id" value="1"/>
+            <column name="item_name" value="sprite"/>
+            <column name="category_id" value="2"/>
+            <column name="price" value="80.00"/>
+            <column name="current_quantity" value="5"/>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>

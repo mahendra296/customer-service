@@ -1,0 +1,518 @@
+openapi: 3.0.1
+info:
+  title: customer-service
+  version: 1.0.0
+  description: customer-service
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+tags:
+  - name: Customer
+    description: Customer service API
+
+paths:
+  /customers/{customerId}/orders:
+    get:
+      tags:
+        - Customer
+      summary: get customer orders
+      description: Get Customer Orders
+      operationId: getCustomerOrders
+      parameters:
+        - name: customerId
+          in: path
+          description: customerId
+          required: true
+          schema:
+            type: long
+          example: 1
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Data Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+        400:
+          description: Input data is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /customers/{customerId}/orders/{orderId}:
+    get:
+      tags:
+        - Customer
+      summary: get customer order by order id
+      description: Get Customer Order by order id
+      operationId: getCustomerOrderByOrderId
+      parameters:
+        - name: customerId
+          in: path
+          description: customerId
+          required: true
+          schema:
+            type: long
+          example: 1
+        - name: orderId
+          in: path
+          description: orderId
+          required: true
+          schema:
+            type: long
+          example: 1
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerOrder'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Data Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+        400:
+          description: Input data is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /customers/signin:
+    post:
+      tags:
+        - Customer
+      summary: customer sign in
+      operationId: signIn
+      requestBody:
+        description: customer signin
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        200:
+          description: successfully Execution
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        404:
+          description: Data Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /shops:
+    get:
+      tags:
+        - Shops
+      summary: get shops
+      operationId: getAllShops
+      parameters:
+        - name: radius
+          required: false
+          in: query
+          schema:
+            type: integer
+        - name: latitude
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: longitude
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: pageNumber
+          required: false
+          in: query
+          schema:
+            type: integer
+          example: 1
+        - name: pageSize
+          required: false
+          in: query
+          schema:
+            type: integer
+          example: 10
+      responses:
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        200:
+          description: Retrieve data successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShopPageResponse'
+        404:
+          description: Data Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /shops/{shopId}/menu:
+    get:
+      tags:
+        - Shops
+      summary: get menu
+      operationId: getMenuByShopId
+      parameters:
+        - name: shopId
+          required: true
+          in: path
+          schema:
+            type: long
+        - name: pageNumber
+          required: false
+          in: query
+          schema:
+            type: integer
+          example: 1
+        - name: pageSize
+          required: false
+          in: query
+          schema:
+            type: integer
+          example: 10
+      responses:
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        200:
+          description: Retrieve data successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuPageResponse'
+        404:
+          description: Data Not Found
+          content:
+            application/json:
+              schema:
+                type: string
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /shops/{shopId}/order:
+    post:
+      tags:
+        - Shops
+      summary: create order
+      operationId: createOrder
+      parameters:
+        - name: shopId
+          in: path
+          description: shopId
+          required: true
+          schema:
+            type: long
+          example: 1
+      requestBody:
+        description: create order
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderRequest'
+      responses:
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        200:
+          description: Retrieve data successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerOrder'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /orders/{orderId}/status:
+    patch:
+      tags:
+        - Shops
+      summary: update order status
+      operationId: updateOrderStatus
+      parameters:
+        - name: orderId
+          in: path
+          description: orderId
+          required: true
+          schema:
+            type: long
+          example: 1
+        - name: status
+          in: query
+          description: status
+          required: true
+          schema:
+            type: string
+          example: OPEN
+      responses:
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        200:
+          description: Success Excecution
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: string
+components:
+  schemas:
+    OrderResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/CustomerOrder'
+    CustomerOrder:
+      type: object
+      properties:
+        id:
+          type: long
+        customerId:
+          type: long
+        shopId:
+          type: long
+        menuId:
+          type: long
+        totalAmount:
+          type: number
+        orderItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerOrderItem'
+        orderStatus:
+          $ref: '#/components/schemas/OrderStatusType'
+    CustomerOrderItem:
+      type: object
+      properties:
+        id:
+          type: long
+        menuItemId:
+          type: long
+        price:
+          type: number
+        quntity:
+          type: integer
+    ErrorResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/Error'
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          description: Http Error Code
+          example: 500
+        message:
+          type: string
+          description: Error Message
+          example: 'Internal Server Error'
+    ShopPageResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShopResponse'
+        paging:
+          $ref: '#/components/schemas/PagingInformation'
+    ShopResponse:
+      type: object
+      properties:
+        id:
+          type: long
+        name:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+        status:
+          type: string
+    MenuPageResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MenuResponse'
+        paging:
+          $ref: '#/components/schemas/PagingInformation'
+    MenuResponse:
+      type: object
+      properties:
+        id:
+          type: long
+        name:
+          type: string
+        menuItem:
+          type: array
+          items:
+            $ref: '#/components/schemas/MenuItemResponse'
+    MenuItemResponse:
+      type: object
+      properties:
+        id:
+          type: long
+        name:
+          type: string
+    PagingInformation:
+      type: object
+      properties:
+        totalRecords:
+          type: integer
+          description: Number of total records in the response.
+          format: int64
+          example: 100
+        pageNumber:
+          type: integer
+          description: The page number to return (starting at page 1).
+          format: int32
+          example: 1
+        pageSize:
+          type: integer
+          description: The number of records to return in a single request
+          format: int32
+          example: 10
+    CurrentLoggedInUser:
+      type: object
+      properties:
+        id:
+          type: long
+        userName:
+          type: string
+        password:
+          type: string
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleResponse'
+    RoleResponse:
+      type: object
+      properties:
+        id:
+          type: long
+        roleName:
+          type: string
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+    OrderRequest:
+      type: object
+      properties:
+        shopId:
+          type: long
+        customerId:
+          type: long
+        menuId:
+          type: long
+        pickUpTime:
+          type: string
+          format: date-time
+        menuItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemRequest'
+    ItemRequest:
+      type: object
+      properties:
+        itemId:
+          type: long
+        quantity:
+          type: int
+    OrderStatusType:
+      type: string
+      enum:
+        - OPEN
+        - PROCESSING
+        - COMPLETED
+        - CANCELLED
+        - FAILED
